@@ -1,0 +1,89 @@
+#MYSQL数据库连接
+Mysql:
+  #MYSQL数据库连接IP及数据库
+  Host: "jdbc:mysql://127.0.0.1:3306/test?useUnicode=true&characterEncoding=utf-8&useSSL=false"
+  #连接数据库使用的用户名
+  User: "root"
+  #连接数据库使用的密码
+  Password: "root"
+#选择储存方式: MYSQL  SQL  YAML
+#MYSQL数据库连接，需要建立MYSQL数据库
+#SQL 会在插件目录内建立对应数据库文件.db文件
+#YAML 会在插件目录内使用文件储存方式储存数据
+Storage: "SQL"
+#排位赛设置相关
+Settings:
+  #排位赛基础积分
+  Fraction: 1000
+  #排位赛每次胜利加分
+  Win: 10
+  #排位赛每次失败减分
+  Fail: 10
+  #队列人数
+  People:
+    #最小人数
+    Mix: 2
+    #最大人数
+    Max: 4
+  #每日首胜执行的指令
+  FirstWinCmd:
+    - "bc <player>赢得了今天的首次胜利"
+#称号
+Levels:
+  #和CC菜单一样随便写
+  sd:
+    #实际显示的名称
+    Name: "&c新手"
+    #多少分数到达
+    Fraction: 10
+    #到达后以控制台执行某个命令
+    Command:
+      - "bc <player>新手"
+#排位赛提示相关
+Title:
+  #排位赛排行榜相关
+  Rank: "<no>----<name>---<fraction>"
+  #排位赛胜利增加积分提示
+  Win: "&c你战胜<player>增加了<fraction>积分"
+  #排位赛失败减少积分提示
+  Fail: "&c你没有打败<player> 减少了<fraction>积分"
+  #当输入指令没有权限的提示信息
+  NoPermission: "&c你没有对应的权限"
+  #玩家不存在提示
+  NoPlayer: "&c所选玩家不存在"
+  #成功参加排位赛的提示
+  Join: "&a参加成功"
+  #被禁止比赛的提示
+  NoJoin: "&c你已经被禁止参加排位赛"
+  #匹配成功的主要标题提示
+  RankSuccess: "你的对手<player>"
+  #在匹配队列的提示
+  Subtitle: "<now>/<max>"
+  #指令帮助提示(感觉不好看请自己修改，我懒)
+  Help:
+    #普通权限显示的内容
+    Use:
+      - "/pr 进入排位赛"
+      - "/pr rank 列出服务器内排位赛排行榜"
+      - "/pr close 退出排位赛队列"
+    #拥有管理权限使用的内容
+    Admin:
+      - "/pr admin sf <player> <num> 设置玩家分数"
+      - "/pr admin af <player> <num> 添加玩家分数"
+      - "/pr admin df <player> <num> 减少玩家分数"
+      - "/pr admin sw <player> <num> 设置玩家胜场"
+      - "/pr admin aw <player> <num> 添加玩家胜场"
+      - "/pr admin dw <player> <num> 减少玩家胜场"
+      - "/pr admin ss <player> <num> 设置玩家败场"
+      - "/pr admin as <player> <num> 添加玩家败场"
+      - "/pr admin ds <player> <num> 减少玩家败场"
+      - "/pr admin sjt <player> <time> 设置玩家在排位赛首次记录时间"
+      - "/pr admin swt <player> <time> 设置玩家首胜时间"
+      - "/pr admin ban <player>  禁止某个玩家参加排位赛"
+      - "/pr admin banp <pokemon>  禁止某个精灵参加排位赛"
+      - "/pr admin rec <player> 允许某个玩家参加排位赛"
+      - "/pr admin recp <pokemon> 允许某个精灵参加排位赛"
+      - "/pr admin bm 禁止某个道具在排位中使用"
+      - "/pr admin recbm 允许某个道具在排位使用"
+      - "/pr admin stt <player> <title> 设置玩家称号(感觉没啥用，下个版本才会自动设置称号)"
+

@@ -1,0 +1,8 @@
+name: PixlemonRank
+main: com.zeyilinxin.pixelmonrank.PixelmonRank
+version: 1.2
+softdepend: [PlaceholderAPI]
+author: 择忆霖心
+commands:
+  pr:
+    usage: /pr
