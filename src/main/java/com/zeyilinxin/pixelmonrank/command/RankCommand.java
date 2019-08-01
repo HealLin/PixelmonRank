@@ -18,7 +18,7 @@ public class RankCommand {
                 paiUtils.initialization(command.pixlemonRank);
                 for(PaiUtils.PlayerRank t : paiUtils.getQian()){
                     player.sendMessage(t.toString());
-                }
+                };
                 player.sendMessage("   ");
                 paiUtils.setMe(player.getName());
                 player.sendMessage(paiUtils.getMe().toString());
