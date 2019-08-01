@@ -6,19 +6,28 @@ import com.zeyilinxin.pixelmonrank.storage.PixelmonStorae;
 import com.zeyilinxin.pixelmonrank.storage.Storage;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class PaiUtils {
-    private final ArrayList<String> paiList;
-    private final ArrayList<PlayerRank> qianshiList;
-    private String me;
+    private ArrayList<PlayerRank> qianshiList = new ArrayList<>();
+    private PlayerRank me;
+    private Map<String , PlayerRank> playerMap = new ConcurrentHashMap();
+    Map<String , Integer> playerList;
     
-    public PaiUtils(List<String> playerList, String name , PixelmonRank rank) {
-        this.paiList = new ArrayList<String>();
+    public PaiUtils() {
+    }
+
+    public void initialization(PixelmonRank rank){
+        playerList = new PixelmonStorae(rank).getStorage().getPaiPlayers();
         this.qianshiList = new ArrayList<PlayerRank>();
-        final PlayerRank[] players = new PlayerRank[playerList.size()];
-        Storage mySql = new PixelmonStorae(rank).getStorage();
+        PlayerRank[] players = new PlayerRank[playerList.size()];
+        String[] playerNames = new String[playerList.keySet().size()];
+        Integer[] fs = new  Integer[playerList.values().size()];
+        playerList.keySet().toArray(playerNames);
+        playerList.values().toArray(fs);
         for (int i = 0; i < playerList.size(); ++i) {
-            players[i] = new PlayerRank(playerList.get(i), mySql.getFraction(playerList.get(i)));
+            players[i] = new PlayerRank(playerNames[i], fs[i]);
         }
 
         for (int j = 0; j < players.length; ++j) {
@@ -46,36 +55,24 @@ public class PaiUtils {
         }
         players[players.length - 1].mingci = mingci;
         final PlayerRank[] iiPlayers = players;
-        for (int i2 = 0; i2 < players.length; ++i2) {
-            this.paiList.add(players[i2].toString());
-        }
         if (players.length >= 10) {
             for (int i2 = 0; i2 < 10; ++i2) {
                 this.qianshiList.add(iiPlayers[i2]);
-            }
-            //this.qianshiList.add("  ");
-            for (int i2 = 0; i2 < iiPlayers.length; ++i2) {
-                if (iiPlayers[i2].name.equals(name)) {
-                    this.qianshiList.add(iiPlayers[i2]);
-                }
             }
         }
         else {
             for (int i2 = 0; i2 < players.length; ++i2) {
                 this.qianshiList.add(players[i2]);
             }
-           // this.qianshiList.add("  ");
-            for (int i2 = 0; i2 < iiPlayers.length; ++i2) {
-                if (iiPlayers[i2].name.equals(name)) {
-                    this.qianshiList.add(iiPlayers[i2]);
-                }
-            }
-            for (int i2 = 0; i2 < iiPlayers.length; ++i2) {
-                if (iiPlayers[i2].name.equals(name)) {
-                    this.me = iiPlayers[i2].toString();
-                }
-            }
+
         }
+        for (int i2 = 0; i2 < players.length; ++i2) {
+            this.playerMap.put( playerNames[i2], players[i2]);
+        }
+    }
+
+    public void setMe(String name ){
+        this.me = this.playerMap.getOrDefault(name , new PlayerRank("" ,0));
     }
     
     private int checkContinue(final PlayerRank[] players, final double sum) {
@@ -87,10 +84,11 @@ public class PaiUtils {
         }
         return count;
     }
-    public ArrayList<String> getPaiMing() {
-        return this.paiList;
+
+    public PlayerRank getMe() {
+        return me;
     }
-    
+
     public ArrayList<PlayerRank> getQian() {
         return this.qianshiList;
     }

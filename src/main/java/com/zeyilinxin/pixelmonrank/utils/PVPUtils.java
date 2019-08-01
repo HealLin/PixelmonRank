@@ -46,10 +46,15 @@ public class PVPUtils {
         BattleParticipant pp2= new PlayerParticipant(entityPlayerMP2, storage2.getAndSendOutFirstAblePokemon(entityPlayerMP2));
         battleParticipants1 = new BattleParticipant[]{pp1};
         battleParticipants2 = new BattleParticipant[]{pp2};
-        rules = new BattleRules();
+        String r = this.pixelmonRankPlugin.getSettingsConfig().getRules();
+        if (r.isEmpty()){
+            rules = new BattleRules();
+        }
+        rules = new BattleRules(r);
     }
 
     public void pvp(){
+
         BattleControllerBase bcb = new BattleControllerBase(battleParticipants1, battleParticipants2, rules);
         BattleRegistry.registerBattle(bcb);
 

@@ -12,6 +12,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class YamlStorage implements Storage{
 
@@ -21,13 +22,13 @@ public class YamlStorage implements Storage{
 
     public YamlStorage(PixelmonRank pixlemonRank) {
         this.pixlemonRank = pixlemonRank;
-        pixelmonRankFile = new File(this.pixlemonRank.getDataFolder() + "\\PixelmonRank");
+        pixelmonRankFile = new File(this.pixlemonRank.getDataFolder() + File.separator + "PixelmonRank");
     }
 
     @Override
     public void connect() {
         this.pixlemonRank.putInfo("YAML连接成功!");
-        pixelmonRankFile = new File(this.pixlemonRank.getDataFolder() + "\\PixelmonRank");
+        pixelmonRankFile = new File(this.pixlemonRank.getDataFolder() + File.separator  + "PixelmonRank");
         if (!pixelmonRankFile.exists()) {
             pixelmonRankFile.mkdirs();
         }
@@ -308,6 +309,18 @@ public class YamlStorage implements Storage{
             list.add(yamlConfiguration.getString("player"));
         }
         return list;
+    }
+
+    @Override
+    public Map<String, Integer> getPaiPlayers() {
+        Map<String , Integer> playerMap = new ConcurrentHashMap();
+        for(File file : this.pixelmonRankFile.listFiles()){
+            YamlConfiguration yamlConfiguration = YamlConfiguration.loadConfiguration(file);
+            String name = yamlConfiguration.getString("player");
+            int num = yamlConfiguration.getInt("fraction");
+            playerMap.put(name , num);
+        }
+        return playerMap;
     }
 
     public int getId(){

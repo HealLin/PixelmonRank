@@ -8,6 +8,8 @@ import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class SqlStorage implements Storage{
 
@@ -772,6 +774,47 @@ public class SqlStorage implements Storage{
             }
         }
         return arrayList;
+    }
+
+    @Override
+    public Map<String, Integer> getPaiPlayers() {
+        Map<String , Integer> playerMap = new ConcurrentHashMap();
+        Connection conn = null;
+        Statement statement = null;
+        ResultSet res = null;
+        try {
+            conn = this.getConnection();
+            statement = conn.createStatement();
+            String sql = "SELECT * from pixelmonrank";
+            res = statement.executeQuery(sql);
+            while (res.next()){
+                String name = res.getString("player");
+                int fen = res.getInt("fraction");
+                playerMap.put(name , fen);
+            }
+            conn.close();
+        } catch (SQLException e) {
+            this.pixlemonRank.warnInfo("获取玩家列表分数失败!");
+            this.error();
+            return new ConcurrentHashMap<>();
+        }finally {
+            try {
+                if (conn != null){
+                    conn.close();
+                    conn = null;
+                }
+                if (statement != null){
+                    statement.close();
+                    statement = null;
+                }
+                if (res != null){
+                    res.close();
+                    res = null;
+                }
+            } catch (SQLException e) {
+            }
+        }
+        return playerMap;
     }
 
     private void error(){

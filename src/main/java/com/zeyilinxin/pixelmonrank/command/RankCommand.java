@@ -14,11 +14,14 @@ public class RankCommand {
             Player player = (Player) sender;
             command.pixlemonRank.getBukkitScheduler().runTask(command.pixlemonRank , ()->{
                 LogPostUtils.postPlayerLog(sender.getName() , "rank");
-                PaiUtils paiUtils = new PaiUtils(new PixelmonStorae(command.pixlemonRank).getStorage().getPlayers(), player.getName() , command.pixlemonRank);
-                for(PaiUtils.PlayerRank l : paiUtils.getQian()){
-                    LogPostUtils.postPlayerTitleLog(l.toString());
-                    player.sendMessage(l.toString());
+                PaiUtils paiUtils = new PaiUtils();
+                paiUtils.initialization(command.pixlemonRank);
+                for(PaiUtils.PlayerRank t : paiUtils.getQian()){
+                    player.sendMessage(t.toString());
                 }
+                player.sendMessage("   ");
+                paiUtils.setMe(player.getName());
+                player.sendMessage(paiUtils.getMe().toString());
             });
             return true;
         }

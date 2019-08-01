@@ -44,5 +44,9 @@ public class SettingsConfig extends PixelmonConfig{
         return arrayList;
     }
 
+    public String getRules(){
+        return this.pixlemonRank.getConfig().getString("Settings.Rules" , "");
+    }
+
 
 }

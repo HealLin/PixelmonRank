@@ -11,6 +11,7 @@ import com.zeyilinxin.pixelmonrank.storage.PixelmonStorae;
 import com.zeyilinxin.pixelmonrank.utils.LevelsUtils;
 import com.zeyilinxin.pixelmonrank.utils.LogPostUtils;
 import com.zeyilinxin.pixelmonrank.utils.MatchUtils;
+import com.zeyilinxin.pixelmonrank.utils.PaiUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -57,6 +58,8 @@ public class PixelmonRank extends JavaPlugin {
         this.putInfo("初始化连接方式");
         new PixelmonStorae(this).getStorage().connect();
         this.putInfo("注册事件监听");
+        Bukkit.getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
+        //Bukkit.getMessenger().registerIncomingPluginChannel(this, "BungeeCord", this);
         Bukkit.getPluginManager().registerEvents(new PixelmonListener(this) , this);
         Bukkit.getPluginManager().registerEvents(new PlayerListener(this) , this);
         if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI") ) {

@@ -37,7 +37,9 @@ public class TitlePlaceholderAPI extends PlaceholderExpansion {
 
     @Override
     public String onRequest(OfflinePlayer player, String params) {
-        PaiUtils paiUtils = new PaiUtils(new PixelmonStorae(this.rank).getStorage().getPlayers(), player.getName() , this.rank);
+        PaiUtils paiUtils = new PaiUtils();
+        paiUtils.initialization(this.rank);
+        paiUtils.setMe(player.getName());
         switch (params.toLowerCase()){
             case "title":{
                 int pos = new PixelmonStorae(this.rank).getStorage().getTitle(player.getName());
@@ -73,6 +75,9 @@ public class TitlePlaceholderAPI extends PlaceholderExpansion {
             case "no10":{
                 return paiUtils.getQian().get(9).toString();
             }
+            case "me":{
+                return paiUtils.getMe().toString();
+            }
             case "no1_no":{
                 return paiUtils.getQian().get(0).mingci + "";
             }
@@ -102,6 +107,9 @@ public class TitlePlaceholderAPI extends PlaceholderExpansion {
             }
             case "no10_no":{
                 return paiUtils.getQian().get(9).mingci + "";
+            }
+            case "me_no":{
+                return paiUtils.getMe().mingci + "";
             }
             case "no1_name":{
                 return paiUtils.getQian().get(0).name;
@@ -133,6 +141,9 @@ public class TitlePlaceholderAPI extends PlaceholderExpansion {
             case "no10_name":{
                 return paiUtils.getQian().get(9).name;
             }
+            case "me_name":{
+                return player.getName();
+            }
             case "no1_fraction":{
                 return paiUtils.getQian().get(0).jifen + "";
             }
@@ -162,6 +173,9 @@ public class TitlePlaceholderAPI extends PlaceholderExpansion {
             }
             case "no10_fraction":{
                 return paiUtils.getQian().get(9).jifen + "";
+            }
+            case "me_fraction":{
+                return paiUtils.getMe().getJifen() + "";
             }
             default:{
                 return null;

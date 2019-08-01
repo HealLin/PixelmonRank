@@ -24,7 +24,6 @@ public class MatchUtils {
         this.sql = new PixelmonStorae(this.main).getStorage();
         int min = this.main.getSettingsConfig().getMixPeople();
         Bukkit.getScheduler().runTaskTimer(this.main , ()->{
-            LogPostUtils.postLog("强制匹配" + min);
             ArrayList<ArrayList<Player>> playerArrayList = new ArrayList<>();
             this.start(playerArrayList , min);
         } , 1L , 600L);
@@ -35,7 +34,6 @@ public class MatchUtils {
     }
 
     public synchronized boolean add(Player player) {
-        LogPostUtils.postLog("添加队列" + player.getName());
         //如果有就不添加
         if (PLAYER_INTEGER_MAP.containsKey(player)){
             return false;
@@ -46,7 +44,6 @@ public class MatchUtils {
         PLAYER_INTEGER_MAP.put(player , point);
         //拿到刚刚添加的人
         for(Player p : PLAYER_INTEGER_MAP.keySet()){
-            LogPostUtils.postLog("拿到添加列表的人" + p.getName());
             //如果列表里面没有
             if (!playerList.contains(p)){
                 //添加到列表
@@ -79,13 +76,11 @@ public class MatchUtils {
     public synchronized ArrayList<ArrayList<Player>> getPlayers() {
         ArrayList<ArrayList<Player>> playerArrayList = new ArrayList<>();
         int max = this.main.getSettingsConfig().getMaxPeople();
-        LogPostUtils.postLog("最大人数" + max);
         this.start(playerArrayList , max);
         return playerArrayList;
     }
 
     private void start(ArrayList<ArrayList<Player>> playerArrayList , int people){
-        LogPostUtils.postLog("获取当前人数" + this.size());
         if (this.size() >= people) {
             ArrayList<Integer> intArrayList = new ArrayList<>();
             int size = 0;
@@ -94,20 +89,13 @@ public class MatchUtils {
             }catch (Exception e){
 
             }
-            LogPostUtils.postLog("取余" + size);
             int newSize = this.size() - size;
-            LogPostUtils.postLog("newSize" + newSize);
             int s = newSize / 2;
-            LogPostUtils.postLog("第三次处理" + s);
             for (int  i = 0; i < s; ++i) {
                 int a = getA(playerList.size());
-                LogPostUtils.postLog("取随机数a" + a);
                 Player player2 = this.playerList.remove(a);
-                LogPostUtils.postLog("取得随机玩家A" + player2.getName());
                 int c = getA(playerList.size());
-                LogPostUtils.postLog("取随机数c" + c);
                 Player player3 = this.playerList.remove(c);
-                LogPostUtils.postLog("取得随机玩家B" + player3.getName());
                 ArrayList<Player> arrayList = new ArrayList<>();
                 arrayList.add(player2);
                 arrayList.add(player3);

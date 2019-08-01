@@ -3,6 +3,7 @@ package com.zeyilinxin.pixelmonrank.storage;
 import org.bukkit.entity.Player;
 
 import java.util.List;
+import java.util.Map;
 
 public interface Storage {
 
@@ -59,5 +60,8 @@ public interface Storage {
     int getTitle(String player);
 
     List<String> getPlayers();
+
+    Map<String , Integer> getPaiPlayers();
+
 
 }

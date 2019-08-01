@@ -94,7 +94,7 @@ public class LevelsUtils {
                     new PixelmonStorae(this.rank).getStorage().setTitle(player , temp);
                 }else{
                     new PixelmonStorae(this.rank).getStorage().setTitle(player , temp);
-                    cmdUtils[temp].execute();
+                    cmdUtils[temp].execute(player);
                 }
             }
         }
@@ -110,10 +110,10 @@ public class LevelsUtils {
             this.rank = rank;
         }
 
-        public void execute(){
+        public void execute(String player){
             Bukkit.getScheduler().scheduleSyncDelayedTask(PixelmonRank.getInstance() , ()->{
                 for(String l : this.stringList){
-                    Bukkit.dispatchCommand(Bukkit.getConsoleSender() , l);
+                    Bukkit.dispatchCommand(Bukkit.getConsoleSender() , l.replace("<player>" , player));
                 }
             });
         }

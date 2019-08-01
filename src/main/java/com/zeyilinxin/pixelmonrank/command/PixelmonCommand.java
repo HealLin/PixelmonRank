@@ -1,7 +1,9 @@
 package com.zeyilinxin.pixelmonrank.command;
 
 import com.pixelmonmod.pixelmon.Pixelmon;
+import com.pixelmonmod.pixelmon.comm.EnumUpdateType;
 import com.pixelmonmod.pixelmon.items.ItemPixelmonSprite;
+import com.pixelmonmod.pixelmon.storage.PlayerPartyStorage;
 import com.zeyilinxin.pixelmonrank.PixelmonRank;
 import com.zeyilinxin.pixelmonrank.api.PixelmonRankBattleEndEvent;
 import com.zeyilinxin.pixelmonrank.command.admin.*;
@@ -21,6 +23,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.util.List;
 
 
@@ -39,6 +44,7 @@ public class PixelmonCommand implements CommandExecutor {
             if (args.length == 0){
                 if (sender instanceof Player){
                     Player player = (Player) sender;
+
                     if (this.pixlemonRank.getSettingsConfig().isBanPlayer(player.getName())){
                         player.sendRawMessage(this.pixlemonRank.getTitleConfig().getNoJoinTitle());
                         return true;
